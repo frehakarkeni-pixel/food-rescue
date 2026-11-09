@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ offer ? 'Modifier l\'offre' : 'Publier une offre' }}{% endblock %}
+{% block body %}
+<div class="card">
+    <h1>{{ offer ? 'Modifier l\'offre' : 'Publier une offre' }}</h1>
+    {{ form_start(form, {attr: offer ? {onsubmit: "return confirm('Enregistrer les modifications de cette offre ?');"} : {}}) }}
+        {{ form_widget(form) }}
+        <button type="submit">{{ offer ? 'Enregistrer' : 'Publier' }}</button>
+        <a class="btn btn-light" href="{{ path('app_commerce_offers') }}">Annuler</a>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

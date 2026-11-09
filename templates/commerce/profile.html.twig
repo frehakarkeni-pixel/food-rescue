@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block title %}Profil du commerce{% endblock %}
+{% block body %}
+<div class="card">
+    <h1>Profil du commerce</h1>
+    {{ form_start(form) }}
+        {{ form_row(form.businessName) }}
+        {{ form_row(form.businessType) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.address) }}
+        {{ form_row(form.city) }}
+        {{ form_row(form.postalCode) }}
+        {{ form_row(form.phone) }}
+
+        <h2>Horaires d'ouverture</h2>
+        {% for key, label in days %}
+            {{ form_row(attribute(form, 'hours_' ~ key)) }}
+        {% endfor %}
+
+        {{ form_rest(form) }}
+        <button type="submit">Enregistrer</button>
+        <a class="btn btn-light" href="{{ path('app_commerce_offers') }}">Retour</a>
+    {{ form_end(form) }}
+
+    <hr style="margin:28px 0; border:0; border-top:1px solid #e5e5e5;">
+
+    <h2>Changer le mot de passe</h2>
+    {{ form_start(passwordForm) }}
+        {{ form_widget(passwordForm) }}
+        <button type="submit">Changer le mot de passe</button>
+    {{ form_end(passwordForm) }}
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% block title %}Mes offres{% endblock %}
+{% block body %}
+{% set labels = {'DRAFT': 'Brouillon', 'ACTIVE': 'Active', 'SOLD_OUT': 'Épuisée', 'EXPIRED': 'Expirée', 'CANCELLED': 'Désactivée'} %}
+<div class="card" style="max-width:900px; margin:auto;">
+    <h1>Mes offres</h1>
+    <a class="btn" href="{{ path('app_commerce_offer_new') }}">+ Publier une offre</a>
+
+    {% if not commerce.approved %}
+        <div class="alert alert-error" style="margin-top:16px;">Votre commerce est en attente de validation par un administrateur.</div>
+    {% endif %}
+
+    {% if offers is empty %}
+        <p>Vous n'avez publié aucune offre pour le moment.</p>
+    {% else %}
+        <table style="width:100%; margin-top:16px; border-collapse:collapse;">
+            <tr>
+                <th align="left">Produit</th><th align="left">Catégorie</th><th align="left">Prix réduit</th>
+                <th align="left">Stock</th><th align="left">Statut</th><th align="left">Actions</th>
+            </tr>
+            {% for o in offers %}
+                <tr>
+                    <td>{{ o.name }}</td>
+                    <td>{{ o.category.name }}</td>
+                    <td>{{ o.discountedPrice }} TND</td>
+                    <td>{{ o.quantityAvailable }} / {{ o.quantityInitial }}</td>
+                    <td>{{ labels[o.status] }}</td>
+                    <td>
+                        <a href="{{ path('app_commerce_offer_edit', {id: o.id}) }}">Modifier</a>
+                        {% if o.status == 'CANCELLED' %}
+                            <form method="post" action="{{ path('app_commerce_offer_reactivate', {id: o.id}) }}" style="display:inline" onsubmit="return confirm('Réactiver cette offre ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('offer_status' ~ o.id) }}">
+                                <button type="submit" style="width:auto; padding:4px 10px; margin:0;">Réactiver</button>
+                            </form>
+                        {% elseif o.status in ['ACTIVE', 'SOLD_OUT'] %}
+                            <form method="post" action="{{ path('app_commerce_offer_deactivate', {id: o.id}) }}" style="display:inline" onsubmit="return confirm('Désactiver cette offre ? Elle ne sera plus réservable.');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('offer_status' ~ o.id) }}">
+                                <button type="submit" style="width:auto; padding:4px 10px; margin:0; background:#c62828;">Désactiver</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</div>
+{% endblock %}

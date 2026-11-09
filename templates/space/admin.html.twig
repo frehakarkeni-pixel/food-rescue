@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+{% block title %}Administration{% endblock %}
+{% block body %}
+<div class="card">
+    <h1>Tableau de bord administrateur</h1>
+    <p>Bienvenue {{ app.user.firstName }} !</p>
+    <a class="btn btn-light" href="{{ path('app_admin_profile') }}">Mon profil</a>
+</div>
+{% endblock %}

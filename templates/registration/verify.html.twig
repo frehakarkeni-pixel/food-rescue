@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block title %}Validation du compte{% endblock %}
+{% block body %}
+<div class="card">
+    <h1>Validation de votre compte</h1>
+    <p>Saisissez le code reçu (valable 15 minutes).</p>
+    <form method="post" action="{{ path('app_verify') }}">
+        <label for="code">Code de validation</label>
+        <input type="text" id="code" name="code" maxlength="6" required autofocus>
+        <button type="submit">Valider</button>
+    </form>
+    <form method="post" action="{{ path('app_verify_resend') }}">
+        <button type="submit" class="btn-light">Renvoyer un code</button>
+    </form>
+</div>
+{% endblock %}

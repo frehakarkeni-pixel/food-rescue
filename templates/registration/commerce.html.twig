@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% block title %}Inscription commerce{% endblock %}
+{% block body %}
+<div class="card">
+    <h1>Créer un compte professionnel</h1>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit">Envoyer la demande</button>
+    {{ form_end(form) }}
+    <p>Vous êtes client ? <a href="{{ path('app_register_client') }}">Inscription client</a></p>
+</div>
+{% endblock %}

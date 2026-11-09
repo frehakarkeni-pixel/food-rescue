@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% block title %}Offres disponibles{% endblock %}
+{% block body %}
+<div class="card" style="max-width:900px; margin:auto;">
+    <h1>Offres disponibles</h1>
+    {% if offers is empty %}
+        <p>Aucune offre disponible pour le moment.</p>
+    {% else %}
+        <table style="width:100%; border-collapse:collapse;">
+            <tr>
+                <th align="left">Produit</th><th align="left">Commerce</th><th align="left">Prix initial</th>
+                <th align="left">Prix réduit</th><th align="left">Disponibilité</th>
+            </tr>
+            {% for o in offers %}
+                <tr>
+                    <td>{{ o.name }}</td>
+                    <td>{{ o.commerce.businessName }}</td>
+                    <td><s>{{ o.originalPrice }} TND</s></td>
+                    <td><strong>{{ o.discountedPrice }} TND</strong></td>
+                    <td>{{ o.quantityAvailable }} dispo · {{ o.availableDate|date('d/m/Y') }} {{ o.startTime|date('H:i') }}–{{ o.pickupDeadline|date('H:i') }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% block title %}Mon profil{% endblock %}
+{% block body %}
+<div class="card">
+    <h1>Mon profil</h1>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit">Enregistrer</button>
+        <a class="btn btn-light" href="{{ path('app_admin_dashboard') }}">Retour</a>
+    {{ form_end(form) }}
+
+    <hr style="margin:28px 0; border:0; border-top:1px solid #e5e5e5;">
+
+    <h2>Changer le mot de passe</h2>
+    {{ form_start(passwordForm) }}
+        {{ form_widget(passwordForm) }}
+        <button type="submit">Changer le mot de passe</button>
+    {{ form_end(passwordForm) }}
+</div>
+{% endblock %}

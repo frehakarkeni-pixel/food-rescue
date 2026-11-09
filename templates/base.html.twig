@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Food Rescue{% endblock %} - Food Rescue</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+</head>
+<body>
+<header class="topbar">
+    <a class="logo" href="{{ path('app_home') }}">🥖 Food Rescue</a>
+    <nav>
+        {% if app.user %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('app_admin_dashboard') }}">Tableau de bord</a>
+                <a href="{{ path('app_admin_profile') }}">Mon profil</a>
+            {% elseif is_granted('ROLE_COMMERCE') %}
+                <a href="{{ path('app_commerce_offers') }}">Mes offres</a>
+                <a href="{{ path('app_commerce_profile') }}">Mon profil</a>
+            {% elseif is_granted('ROLE_CLIENT') %}
+                <a href="{{ path('app_client_offers') }}">Offres</a>
+                <a href="{{ path('app_client_profile') }}">Mon profil</a>
+            {% endif %}
+            <span>{{ app.user.userIdentifier }}</span>
+            <a href="{{ path('app_logout') }}">Déconnexion</a>
+        {% else %}
+            <a href="{{ path('app_login') }}">Connexion</a>
+            <a href="{{ path('app_register_client') }}">Inscription</a>
+        {% endif %}
+    </nav>
+</header>
+<main class="container">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">{{ message }}</div>
+        {% endfor %}
+    {% endfor %}
+    {% block body %}{% endblock %}
+</main>
+</body>
+</html>
